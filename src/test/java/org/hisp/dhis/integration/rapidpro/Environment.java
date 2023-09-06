@@ -36,11 +36,10 @@ import io.restassured.http.ContentType;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import org.hisp.dhis.api.model.v2_39_1.DescriptiveWebMessage;
-import org.hisp.dhis.api.model.v2_39_1.TrackedEntityInstance;
 import org.hisp.dhis.api.model.v40_0.Notification;
 import org.hisp.dhis.api.model.v40_0.OrganisationUnit;
 import org.hisp.dhis.api.model.v40_0.OrganisationUnitLevel;
+import org.hisp.dhis.api.model.v40_0.ProgramStage;
 import org.hisp.dhis.api.model.v40_0.RefOrganisationUnit;
 import org.hisp.dhis.api.model.v40_0.RefUserRole;
 import org.hisp.dhis.api.model.v40_0.TrackedEntity;
@@ -71,7 +70,6 @@ import java.nio.file.Path;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -169,8 +167,9 @@ public final class Environment
         addOrgUnitToDataSet( ORG_UNIT_ID );
         addOrgUnitToTrackerProgram( ORG_UNIT_ID );
         createDhis2Users( ORG_UNIT_ID );
-        createDhis2TrackedEntitiesWithEnrollment( ORG_UNIT_ID);
-        deleteDhis2TrackedEntities(ORG_UNIT_ID);
+        updateProgramStageConfiguration( "ZP5HZ87wzc0" );
+        createDhis2TrackedEntitiesWithEnrollment( ORG_UNIT_ID );
+        deleteDhis2TrackedEntities( ORG_UNIT_ID );
         runAnalytics();
     }
 
@@ -433,93 +432,107 @@ public final class Environment
     public static void createDhis2TrackedEntityWithEnrollment( String orgUnitId, String phoneNumber, String patientUID )
         throws IOException, ParseException
     {
+        final long DAY_IN_MILLISECONDS = 86400000L;
         Faker faker = new Faker();
         Name name = faker.name();
-        String today = new SimpleDateFormat("yyyy-MM-dd").format( new Date() );
+        String today = new SimpleDateFormat( "yyyy-MM-dd" ).format( new Date() );
+        String tomorrow = new SimpleDateFormat( "yyyy-MM-dd" ).format( new Date( new Date().getTime() + DAY_IN_MILLISECONDS ) );
         String firstName = name.firstName();
         String lastName = name.lastName();
-        Date dateOfBirth = faker.date().past( 365*60, TimeUnit.DAYS );
-        SimpleDateFormat dmyFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String dateOfBirthFmt = dmyFormat.format(dateOfBirth);
+        Date dateOfBirth = faker.date().past( 365 * 60, TimeUnit.DAYS );
+        SimpleDateFormat dmyFormat = new SimpleDateFormat( "yyyy-MM-dd" );
+        String dateOfBirthFmt = dmyFormat.format( dateOfBirth );
         String gender = "Male";
-        List<WebapiControllerTrackerViewAttribute> attributes = new ArrayList<>();
         TrackedEntity trackedEntity = new TrackedEntity()
-            .withAttributes(
-                List.of(
-                    new WebapiControllerTrackerViewAttribute().withAttribute( "sB1IHYu2xQT" ).withValue( firstName ),
-                    new WebapiControllerTrackerViewAttribute().withAttribute( "ENRjVGxVL6l" ).withValue( lastName ),
-                    new WebapiControllerTrackerViewAttribute().withAttribute( "HlKXyR5qr2e" ).withValue( patientUID ),
-                    new WebapiControllerTrackerViewAttribute().withAttribute( "fctSQp5nAYl" ).withValue( phoneNumber ),
-                    new WebapiControllerTrackerViewAttribute().withAttribute( "oindugucx72" ).withValue(gender),
-                    new WebapiControllerTrackerViewAttribute().withAttribute( "NI0QRzJvQ0k" ).withValue(dateOfBirthFmt)
-                    ))
-            .withOrgUnit(orgUnitId)
+            .withOrgUnit( orgUnitId )
             .withTrackedEntityType( "MCPQUTHX1Ze" )
             .withEnrollments(
                 List.of(
                     new WebapiControllerTrackerViewRelationshipItemEnrollment()
-                    .withOrgUnit( ORG_UNIT_ID )
-                    .withProgram("w0qPtIW0JYu")
-                    .withEnrolledAt( today )
-                    .withEvents(
-                        List.of(
-                            new WebapiControllerTrackerViewRelationshipItemEvent()
-                                .withProgramStage("xT4NoUJyspv" )
-                                .withOrgUnit(ORG_UNIT_ID)
-                                .withOccurredAt( today )
-                                .withStatus( WebapiControllerTrackerViewRelationshipItemEvent.Status.SCHEDULE ),
-                            new WebapiControllerTrackerViewRelationshipItemEvent()
-                                .withProgramStage("ZP5HZ87wzc0" )
-                                .withOrgUnit(ORG_UNIT_ID)
-                                .withOccurredAt( today )
-                                .withScheduledAt( today )
-                                .withStatus( WebapiControllerTrackerViewRelationshipItemEvent.Status.SCHEDULE ),
-                            new WebapiControllerTrackerViewRelationshipItemEvent()
-                                .withProgramStage("Ish2wk3eLg3" )
-                                .withOrgUnit(ORG_UNIT_ID)
-                                .withOccurredAt( today )
-                                .withScheduledAt( today )
-                                .withStatus( WebapiControllerTrackerViewRelationshipItemEvent.Status.SCHEDULE ),
-                            new WebapiControllerTrackerViewRelationshipItemEvent()
-                                .withProgramStage("bTOU9xE67NJ" )
-                                .withOrgUnit(ORG_UNIT_ID)
-                                .withOccurredAt( today )
-                                .withScheduledAt( today )
-                                .withStatus( WebapiControllerTrackerViewRelationshipItemEvent.Status.SCHEDULE )))));
+                        .withOrgUnit( ORG_UNIT_ID )
+                        .withProgram( "w0qPtIW0JYu" )
+                        .withEnrolledAt( today )
+                        .withAttributes(
+                            List.of(
+                                new WebapiControllerTrackerViewAttribute().withAttribute( "sB1IHYu2xQT" ).withValue( firstName ),
+                                new WebapiControllerTrackerViewAttribute().withAttribute( "ENRjVGxVL6l" ).withValue( lastName ),
+                                new WebapiControllerTrackerViewAttribute().withAttribute( "HlKXyR5qr2e" ).withValue( patientUID ),
+                                new WebapiControllerTrackerViewAttribute().withAttribute( "fctSQp5nAYl" ).withValue( phoneNumber ),
+                                new WebapiControllerTrackerViewAttribute().withAttribute( "oindugucx72" ).withValue( gender ),
+                                new WebapiControllerTrackerViewAttribute().withAttribute( "NI0QRzJvQ0k" ).withValue( dateOfBirthFmt )
+                            ) )
+                        .withOccurredAt( today )
+                        .withStatus( WebapiControllerTrackerViewRelationshipItemEnrollment.Status.ACTIVE )
+                        .withEvents(
+                            List.of(
+                                new WebapiControllerTrackerViewRelationshipItemEvent()
+                                    .withProgramStage( "xT4NoUJyspv" )
+                                    .withOrgUnit( ORG_UNIT_ID )
+                                    .withOccurredAt( today )
+                                    .withScheduledAt( today )
+                                    .withProgram( "w0qPtIW0JYu" )
+                                    .withStatus( WebapiControllerTrackerViewRelationshipItemEvent.Status.ACTIVE ),
+                                new WebapiControllerTrackerViewRelationshipItemEvent()
+                                    .withProgramStage( "ZP5HZ87wzc0" )
+                                    .withOrgUnit( ORG_UNIT_ID )
+                                    .withScheduledAt( tomorrow )
+                                    .withProgram( "w0qPtIW0JYu" )
+                                    .withStatus( WebapiControllerTrackerViewRelationshipItemEvent.Status.SCHEDULE ) ) ) ) );
 
-        Dhis2Response dhis2Response = DHIS2_CLIENT.post( "trackedEntityInstances" )
-            .withResource( trackedEntity )
+        Dhis2Response dhis2Response = DHIS2_CLIENT.post( "tracker" )
+            .withResource( Map.of( "trackedEntities", List.of( trackedEntity ) ) )
+            .withParameter( "async", "false" )
             .transfer();
-        assertEquals( DescriptiveWebMessage.Status.OK, dhis2Response.returnAs(DescriptiveWebMessage.class ).getStatus().get());
+        assertEquals( WebMessage.Status.OK, dhis2Response.returnAs( WebMessage.class ).getStatus() );
     }
 
-    public static void createDhis2TrackedEntitiesWithEnrollment(String orgUnitId)
+    public static void createDhis2TrackedEntitiesWithEnrollment( String orgUnitId )
         throws IOException, ParseException
     {
         int phoneNumber = 50100;
         int patientId = 1000000;
         for ( int i = 0; i < 10; i++ )
         {
-            createDhis2TrackedEntityWithEnrollment( orgUnitId, "55"+phoneNumber,"ID-"+patientId );
+            createDhis2TrackedEntityWithEnrollment( orgUnitId, "55" + phoneNumber, "ID-" + patientId );
             phoneNumber++;
             patientId++;
         }
     }
 
-    public static void deleteDhis2TrackedEntities(String orgUnitId)
+    public static void updateProgramStageConfiguration( String programStageId )
+    {
+        ProgramStage programStage = DHIS2_CLIENT.get( "programStages/{id}", programStageId ).transfer().returnAs( ProgramStage.class )
+            .withDisplayGenerateEventBox( true )
+            .withAutoGenerateEvent( true )
+            .withHideDueDate( false )
+            .withMinDaysFromStart( 0 )
+            .withBlockEntryForm( false )
+            .withOpenAfterEnrollment( false )
+            .withGeneratedByEnrollmentDate( true );
+        Dhis2Response dhis2Response = DHIS2_CLIENT.put( "programStages/{id}", programStageId )
+            .withResource( programStage )
+            .transfer();
+        assertEquals( WebMessage.Status.OK, dhis2Response.returnAs( WebMessage.class ).getStatus() );
+    }
+
+    public static void deleteDhis2TrackedEntities( String orgUnitId )
         throws
         IOException
     {
-        Iterable<TrackedEntityInstance> trackedEntitiesIterable = DHIS2_CLIENT.get( "trackedEntityInstances" )
+        Iterable<TrackedEntity> trackedEntitiesIterable = DHIS2_CLIENT.get( "tracker/trackedEntities" )
             .withoutPaging()
-            .withParameter( "program","w0qPtIW0JYu" )
-            .withParameter( "ou",orgUnitId )
+            .withParameter( "program", "w0qPtIW0JYu" )
+            .withParameter( "orgUnit", orgUnitId )
             .transfer()
-            .returnAs( TrackedEntityInstance.class, "trackedEntityInstances" );
+            .returnAs( TrackedEntity.class, "instances" );
 
-        for ( TrackedEntityInstance trackedEntity : trackedEntitiesIterable )
+        for ( TrackedEntity trackedEntity : trackedEntitiesIterable )
         {
-            DHIS2_CLIENT.delete( "trackedEntityInstances/{id}", trackedEntity.getTrackedEntityInstance() ).transfer().close();
+            DHIS2_CLIENT.post( "tracker")
+                .withResource( Map.of("trackedEntities",List.of(trackedEntity)) )
+                .withParameter("importStrategy","DELETE"  )
+                .transfer()
+                .close();
         }
     }
 
