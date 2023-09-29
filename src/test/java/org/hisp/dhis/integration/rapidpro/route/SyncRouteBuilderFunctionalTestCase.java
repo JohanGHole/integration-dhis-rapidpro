@@ -91,6 +91,7 @@ public class SyncRouteBuilderFunctionalTestCase extends AbstractFunctionalTestCa
             .body( "results[0].fields.dhis2_organisation_unit_id", equalTo( Environment.ORG_UNIT_ID ) );
     }
 
+
     @Test
     public void testNewContactSynchronisationGivenInvalidPhoneNumber()
     {

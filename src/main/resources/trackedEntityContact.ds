@@ -1,0 +1,3 @@
+{
+  urns: (if cml.exchangeProperty("phoneNumber") != null && !ds.isBlank(cml.exchangeProperty("phoneNumber")) then ['whatsapp:%s' % cml.exchangeProperty("phoneNumber")] else [])
+}
