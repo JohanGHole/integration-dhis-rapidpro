@@ -200,7 +200,15 @@ public final class Environment
             .when()
             .post( "/org/signup/" ).then().statusCode( 302 );
 
-        importFlowUnderTest();
+        String flowDefinition = StreamUtils.copyToString(
+            Thread.currentThread().getContextClassLoader().getResourceAsStream( "flow.json" ),
+            Charset.defaultCharset() );
+        String programStageFlowDefinition = StreamUtils.copyToString(
+            Thread.currentThread().getContextClassLoader().getResourceAsStream( "programStageFlow.json" ),
+            Charset.defaultCharset() );
+
+        importFlowUnderTest( flowDefinition );
+        importFlowUnderTest( programStageFlowDefinition );
 
         RAPIDPRO_API_TOKEN = generateRapidProApiToken();
         RAPIDPRO_API_REQUEST_SPEC = new RequestSpecBuilder().setBaseUri( RAPIDPRO_API_URL )
@@ -213,13 +221,10 @@ public final class Environment
 
     }
 
-    private static void importFlowUnderTest()
+    private static void importFlowUnderTest(String flowDefinition)
         throws
         IOException
     {
-        String flowDefinition = StreamUtils.copyToString(
-            Thread.currentThread().getContextClassLoader().getResourceAsStream( "flow.json" ),
-            Charset.defaultCharset() );
 
         String sessionId = fetchRapidProSessionId( "claude@dhis2.org", "12345678" );
         ExtractableResponse<Response> flowImportPageResponse = given( RAPIDPRO_REQUEST_SPEC ).cookie( "sessionid",

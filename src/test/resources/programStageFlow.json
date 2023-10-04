@@ -1,0 +1,843 @@
+{
+  "version": "13",
+  "site": "https://textit.com",
+  "flows": [
+    {
+      "name": "Specimen collection and shipment to NRL",
+      "uuid": "94b31ca6-52d6-4ec8-ac75-915da5d1fe0d",
+      "spec_version": "13.2.0",
+      "language": "eng",
+      "type": "messaging",
+      "nodes": [
+        {
+          "uuid": "d0a4ba97-c496-43a3-9f5f-4c58b5a17ffd",
+          "actions": [
+            {
+              "attachments": [],
+              "text": "This is a demo flow for the  \"AFI - Specimen collection and shipment\" Program stage. Please answer each of the questions.",
+              "type": "send_msg",
+              "all_urns": false,
+              "quick_replies": [],
+              "uuid": "b2091698-f4ce-4960-9d7b-172dad9f297d"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "2f72de66-6594-4ffe-9287-20500600dc77",
+              "destination_uuid": "757bc28d-8097-4f6a-b752-3faed22ed0c9"
+            }
+          ]
+        },
+        {
+          "uuid": "757bc28d-8097-4f6a-b752-3faed22ed0c9",
+          "actions": [
+            {
+              "attachments": [],
+              "text": "Question 1: Given name?",
+              "type": "send_msg",
+              "all_urns": false,
+              "quick_replies": [],
+              "uuid": "00244483-e346-4b60-a1c0-11273cc41353"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "2e54cebf-76a0-4f40-9a56-cd817c96256f",
+              "destination_uuid": "2e992a35-da2c-456b-a9d2-43e02870fd41"
+            }
+          ]
+        },
+        {
+          "uuid": "2e992a35-da2c-456b-a9d2-43e02870fd41",
+          "actions": [],
+          "router": {
+            "type": "switch",
+            "default_category_uuid": "3727c3e4-fe90-45ff-82ab-ae04b7b1a164",
+            "cases": [
+              {
+                "arguments": [],
+                "type": "has_text",
+                "uuid": "05432025-c992-4f31-be95-8d9150bd6df9",
+                "category_uuid": "4c7a0615-17ac-446d-9fb8-d2ee829485bd"
+              }
+            ],
+            "categories": [
+              {
+                "uuid": "4c7a0615-17ac-446d-9fb8-d2ee829485bd",
+                "name": "Has Text",
+                "exit_uuid": "b96c432a-c178-43dc-bcf2-0359c2807a63"
+              },
+              {
+                "uuid": "3727c3e4-fe90-45ff-82ab-ae04b7b1a164",
+                "name": "Other",
+                "exit_uuid": "be5387a4-aaf3-4d29-82d1-6940803f7535"
+              }
+            ],
+            "operand": "@input.text",
+            "wait": {
+              "type": "msg"
+            },
+            "result_name": "IDS_AFI_SPECIMEN_COLLECTOR_GIVEN_NAME"
+          },
+          "exits": [
+            {
+              "uuid": "b96c432a-c178-43dc-bcf2-0359c2807a63",
+              "destination_uuid": "89a30ba1-2725-452b-99a5-6e1235557fbf"
+            },
+            {
+              "uuid": "be5387a4-aaf3-4d29-82d1-6940803f7535",
+              "destination_uuid": null
+            }
+          ]
+        },
+        {
+          "uuid": "89a30ba1-2725-452b-99a5-6e1235557fbf",
+          "actions": [
+            {
+              "attachments": [],
+              "text": "Question 2: Family name?",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "58325bfd-f4d2-48dc-b6e0-233b2b8743e8"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "a1f2e412-6963-4130-9f6f-151614df4ae2",
+              "destination_uuid": "4566c261-fee9-46c2-8ab3-621743c55523"
+            }
+          ]
+        },
+        {
+          "uuid": "4566c261-fee9-46c2-8ab3-621743c55523",
+          "actions": [],
+          "router": {
+            "type": "switch",
+            "default_category_uuid": "f504e4e6-8634-4d1e-a254-4be9cdc62add",
+            "cases": [
+              {
+                "arguments": [],
+                "type": "has_text",
+                "uuid": "1ad1fc7a-4bfc-42fe-8da1-20322cca3fff",
+                "category_uuid": "09f4c833-14df-4c8c-adc5-2baa0b2cbdd6"
+              }
+            ],
+            "categories": [
+              {
+                "uuid": "09f4c833-14df-4c8c-adc5-2baa0b2cbdd6",
+                "name": "Has Text",
+                "exit_uuid": "3eb99144-b5df-4ce9-b0f1-4889f908ba1f"
+              },
+              {
+                "uuid": "f504e4e6-8634-4d1e-a254-4be9cdc62add",
+                "name": "Other",
+                "exit_uuid": "04b33515-2740-4cbf-9e1a-0bc8c4fd9ed2"
+              }
+            ],
+            "operand": "@input.text",
+            "wait": {
+              "type": "msg"
+            },
+            "result_name": "IDS_AFI_SPECIMEN_COLLECTOR_FAMILY_NAME"
+          },
+          "exits": [
+            {
+              "uuid": "3eb99144-b5df-4ce9-b0f1-4889f908ba1f",
+              "destination_uuid": "7dbf8f4a-4fd0-490b-ab84-28fa00db8a9c"
+            },
+            {
+              "uuid": "04b33515-2740-4cbf-9e1a-0bc8c4fd9ed2",
+              "destination_uuid": null
+            }
+          ]
+        },
+        {
+          "uuid": "7dbf8f4a-4fd0-490b-ab84-28fa00db8a9c",
+          "actions": [
+            {
+              "attachments": [],
+              "text": "Question 3: What was the date the specimen was collected? (Date Format:  \"YYYY-MM-DD\")",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "111b6d07-7e60-421c-bb4e-059c8467cf61"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "9861a7f9-59fe-4ce3-95b2-8a6077352bb8",
+              "destination_uuid": "76389fd4-18e8-463a-a3d5-37dde54f10e1"
+            }
+          ]
+        },
+        {
+          "uuid": "76389fd4-18e8-463a-a3d5-37dde54f10e1",
+          "actions": [],
+          "router": {
+            "type": "switch",
+            "default_category_uuid": "665c309b-8240-4251-b0ca-947161815a15",
+            "cases": [
+              {
+                "arguments": [],
+                "type": "has_date",
+                "uuid": "ee7dcc59-58a9-473c-ac0f-8b0d0dd0416f",
+                "category_uuid": "f6bcd3fd-e8b7-4a5c-96ab-94da5b42fc61"
+              }
+            ],
+            "categories": [
+              {
+                "uuid": "f6bcd3fd-e8b7-4a5c-96ab-94da5b42fc61",
+                "name": "Has Date",
+                "exit_uuid": "08d21caa-50ab-46ea-96c7-02eb94fc83bc"
+              },
+              {
+                "uuid": "665c309b-8240-4251-b0ca-947161815a15",
+                "name": "Other",
+                "exit_uuid": "653bb81a-b9e2-4354-84c0-a5e733f75ca8"
+              }
+            ],
+            "operand": "@input.text",
+            "wait": {
+              "type": "msg"
+            },
+            "result_name": "IDS_AFI_SPECIMEN_DATE_COLLECTION"
+          },
+          "exits": [
+            {
+              "uuid": "08d21caa-50ab-46ea-96c7-02eb94fc83bc",
+              "destination_uuid": "36430f46-3b15-4329-8787-ad8afbbc5da0"
+            },
+            {
+              "uuid": "653bb81a-b9e2-4354-84c0-a5e733f75ca8",
+              "destination_uuid": null
+            }
+          ]
+        },
+        {
+          "uuid": "36430f46-3b15-4329-8787-ad8afbbc5da0",
+          "actions": [
+            {
+              "attachments": [],
+              "text": "Question 4: What was the time when the specimen was collected? (Time Format: \"HH:MM\")",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "14b0e6cc-c20b-40be-9339-b6f7bebdbf82"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "c6475a60-9650-4387-95c6-13336ee6a062",
+              "destination_uuid": "06305f17-d8a5-4dec-bef6-00fd93329425"
+            }
+          ]
+        },
+        {
+          "uuid": "06305f17-d8a5-4dec-bef6-00fd93329425",
+          "actions": [],
+          "router": {
+            "type": "switch",
+            "default_category_uuid": "a929b4e9-d06b-4d8f-b2b9-aec2a75904db",
+            "cases": [
+              {
+                "arguments": [],
+                "type": "has_time",
+                "uuid": "b76b73d3-a3ff-4d3a-8a68-47391f21fb7b",
+                "category_uuid": "98709e8b-cd22-473c-8e4b-8becd4969520"
+              }
+            ],
+            "categories": [
+              {
+                "uuid": "98709e8b-cd22-473c-8e4b-8becd4969520",
+                "name": "Has Time",
+                "exit_uuid": "f533a512-a0a6-4e23-880e-28c5530d0006"
+              },
+              {
+                "uuid": "a929b4e9-d06b-4d8f-b2b9-aec2a75904db",
+                "name": "Other",
+                "exit_uuid": "8321f967-efc7-4a6b-9a59-bd11f2ab9814"
+              }
+            ],
+            "operand": "@input.text",
+            "wait": {
+              "type": "msg"
+            },
+            "result_name": "IDS_AFI_SPECIMEN_TIME_COLLECTION"
+          },
+          "exits": [
+            {
+              "uuid": "f533a512-a0a6-4e23-880e-28c5530d0006",
+              "destination_uuid": "8b4a28c0-21c4-4d90-8f73-43d349183b28"
+            },
+            {
+              "uuid": "8321f967-efc7-4a6b-9a59-bd11f2ab9814",
+              "destination_uuid": null
+            }
+          ]
+        },
+        {
+          "uuid": "8b4a28c0-21c4-4d90-8f73-43d349183b28",
+          "actions": [
+            {
+              "attachments": [],
+              "text": "Question 5: Whole blood collected? (\"Yes\" / \"No\")",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "e6d84fb2-5a73-45b9-941b-8524c99911c3"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "80ed79c6-1960-4ec8-b0b6-014b4bbd8626",
+              "destination_uuid": "f8bdfdbc-295a-4403-8a24-eb451590d863"
+            }
+          ]
+        },
+        {
+          "uuid": "f8bdfdbc-295a-4403-8a24-eb451590d863",
+          "actions": [],
+          "router": {
+            "type": "switch",
+            "default_category_uuid": "61d3e9d9-f04a-46f6-9546-0f7309e6801e",
+            "cases": [
+              {
+                "arguments": [
+                  "Yes, yes, y, 1"
+                ],
+                "type": "has_any_word",
+                "uuid": "a8e4ec89-b859-451d-a7df-db1340dabb57",
+                "category_uuid": "57b7d6b1-9737-41b8-863f-ac04d26e6924"
+              },
+              {
+                "arguments": [
+                  "No, no, n, 0"
+                ],
+                "type": "has_any_word",
+                "uuid": "8c9604b6-86e5-41fb-9c4d-65d25cf08e97",
+                "category_uuid": "23557b9b-b73d-4990-8663-03f76c1bdac4"
+              }
+            ],
+            "categories": [
+              {
+                "uuid": "57b7d6b1-9737-41b8-863f-ac04d26e6924",
+                "name": "Yes",
+                "exit_uuid": "555894e3-ac67-44cc-ba30-9c778b79f2b3"
+              },
+              {
+                "uuid": "23557b9b-b73d-4990-8663-03f76c1bdac4",
+                "name": "No",
+                "exit_uuid": "08333ed5-0174-4496-a277-64f884bed01b"
+              },
+              {
+                "uuid": "61d3e9d9-f04a-46f6-9546-0f7309e6801e",
+                "name": "Other",
+                "exit_uuid": "b7715086-07a9-4578-9fcb-a5c877ec1130"
+              }
+            ],
+            "operand": "@input.text",
+            "wait": {
+              "type": "msg"
+            },
+            "result_name": "IDS_AFI_SPECIMEN_COLLECTION_BLOOD"
+          },
+          "exits": [
+            {
+              "uuid": "555894e3-ac67-44cc-ba30-9c778b79f2b3",
+              "destination_uuid": "95c113f6-660e-4021-9cb0-eb3fd9fc9732"
+            },
+            {
+              "uuid": "08333ed5-0174-4496-a277-64f884bed01b",
+              "destination_uuid": "4839a055-e643-49e3-a0ef-5e0e4e360a5a"
+            },
+            {
+              "uuid": "b7715086-07a9-4578-9fcb-a5c877ec1130",
+              "destination_uuid": null
+            }
+          ]
+        },
+        {
+          "uuid": "95c113f6-660e-4021-9cb0-eb3fd9fc9732",
+          "actions": [
+            {
+              "type": "set_run_result",
+              "name": "IDS_AFI_SPECIMEN_COLLECTION_BLOOD",
+              "value": "true",
+              "category": "",
+              "uuid": "c0e099c1-afc8-446a-b9aa-edb7221d82fd"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "621679a9-aef7-433b-b100-04ec6a093ad8",
+              "destination_uuid": "e0c943bd-b890-48c7-a016-8f1d595e9bcd"
+            }
+          ]
+        },
+        {
+          "uuid": "4839a055-e643-49e3-a0ef-5e0e4e360a5a",
+          "actions": [
+            {
+              "type": "set_run_result",
+              "name": "IDS_AFI_SPECIMEN_COLLECTION_BLOOD",
+              "value": "false",
+              "category": "",
+              "uuid": "51ae131d-b980-4520-bf79-755b80264851"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "98e52b38-c1c1-4bf3-8454-bb1586ebe89b",
+              "destination_uuid": "e0c943bd-b890-48c7-a016-8f1d595e9bcd"
+            }
+          ]
+        },
+        {
+          "uuid": "e0c943bd-b890-48c7-a016-8f1d595e9bcd",
+          "actions": [
+            {
+              "attachments": [],
+              "text": "Question 6: Serum Collected? (\"Yes\" / \"No\")",
+              "type": "send_msg",
+              "all_urns": false,
+              "quick_replies": [],
+              "uuid": "e5d03e22-cdc5-4b08-bfb6-2f1f34c3f681"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "b9cc403c-6bbc-4878-ae0d-af5a2222745e",
+              "destination_uuid": "e429ccbd-8385-4d00-b688-377f0b3dbad5"
+            }
+          ]
+        },
+        {
+          "uuid": "e429ccbd-8385-4d00-b688-377f0b3dbad5",
+          "actions": [],
+          "router": {
+            "type": "switch",
+            "default_category_uuid": "3c74bdda-bbbd-4179-ac04-cb560fbef1cb",
+            "cases": [
+              {
+                "arguments": [
+                  "Yes,yes,y,1"
+                ],
+                "type": "has_any_word",
+                "uuid": "5654a229-b893-4d3a-ba26-46226b4a6121",
+                "category_uuid": "db460eb0-d622-4287-a442-fa581e139fde"
+              },
+              {
+                "arguments": [
+                  "No,no,n,0"
+                ],
+                "type": "has_any_word",
+                "uuid": "804c32ca-d714-421e-b5a3-2e8aaa4ed20b",
+                "category_uuid": "ee7469ad-4ac0-4304-96e0-768626daf1ca"
+              }
+            ],
+            "categories": [
+              {
+                "uuid": "db460eb0-d622-4287-a442-fa581e139fde",
+                "name": "Yes",
+                "exit_uuid": "c87ef9d4-e938-4a0f-8f08-5bcce9968608"
+              },
+              {
+                "uuid": "ee7469ad-4ac0-4304-96e0-768626daf1ca",
+                "name": "No",
+                "exit_uuid": "3102eeb5-a4db-4af0-86e8-3761483f47d6"
+              },
+              {
+                "uuid": "3c74bdda-bbbd-4179-ac04-cb560fbef1cb",
+                "name": "Other",
+                "exit_uuid": "62d02b71-36ba-42a2-9a03-135765f9658a"
+              }
+            ],
+            "operand": "@input.text",
+            "wait": {
+              "type": "msg"
+            },
+            "result_name": "IDS_AFI_SPECIMEN_COLLECTION_SERUM"
+          },
+          "exits": [
+            {
+              "uuid": "c87ef9d4-e938-4a0f-8f08-5bcce9968608",
+              "destination_uuid": "3fd8e632-7bc8-4738-85e2-ae525508f38a"
+            },
+            {
+              "uuid": "3102eeb5-a4db-4af0-86e8-3761483f47d6",
+              "destination_uuid": "29929141-5621-4c97-b368-f7057d5f6f30"
+            },
+            {
+              "uuid": "62d02b71-36ba-42a2-9a03-135765f9658a",
+              "destination_uuid": null
+            }
+          ]
+        },
+        {
+          "uuid": "3fd8e632-7bc8-4738-85e2-ae525508f38a",
+          "actions": [
+            {
+              "type": "set_run_result",
+              "name": "IDS_AFI_SPECIMEN_COLLECTION_SERUM",
+              "value": "true",
+              "category": "",
+              "uuid": "6ca49be7-c86d-40c6-af36-bd50b26acc47"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "e25f6d6e-5151-4cdd-8cfe-89aa34093070",
+              "destination_uuid": "421560ab-dd20-49db-97cc-091f267a5077"
+            }
+          ]
+        },
+        {
+          "uuid": "29929141-5621-4c97-b368-f7057d5f6f30",
+          "actions": [
+            {
+              "type": "set_run_result",
+              "name": "IDS_AFI_SPECIMEN_COLLECTION_SERUM",
+              "value": "false",
+              "category": "",
+              "uuid": "6cd0f6aa-fcf4-4efd-9f86-b00553d8d390"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "495e9afb-1630-429d-a712-948c63ab8150",
+              "destination_uuid": "421560ab-dd20-49db-97cc-091f267a5077"
+            }
+          ]
+        },
+        {
+          "uuid": "421560ab-dd20-49db-97cc-091f267a5077",
+          "actions": [
+            {
+              "attachments": [],
+              "text": "Question 7: Date of specimen transport? (Date Format: \"YYYY-MM-DD\")",
+              "type": "send_msg",
+              "all_urns": false,
+              "quick_replies": [],
+              "uuid": "c4f65702-ac32-42b2-9eb4-3ab82ca7cbcd"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "2fba3721-a9d2-4940-911f-b759f2a5a8f9",
+              "destination_uuid": "1bda5207-fb29-4043-82ce-81bdf94414f6"
+            }
+          ]
+        },
+        {
+          "uuid": "1bda5207-fb29-4043-82ce-81bdf94414f6",
+          "actions": [],
+          "router": {
+            "type": "switch",
+            "default_category_uuid": "99a2258f-99a6-49be-bd1c-6f4b345cb5c5",
+            "cases": [
+              {
+                "arguments": [],
+                "type": "has_date",
+                "uuid": "86305053-20f4-4046-8fda-3c7f8347f232",
+                "category_uuid": "2c2ff26b-395d-4d4b-b576-3efa384f2596"
+              }
+            ],
+            "categories": [
+              {
+                "uuid": "2c2ff26b-395d-4d4b-b576-3efa384f2596",
+                "name": "Has Date",
+                "exit_uuid": "ccafbd54-dd5b-4143-bef7-f11556103540"
+              },
+              {
+                "uuid": "99a2258f-99a6-49be-bd1c-6f4b345cb5c5",
+                "name": "Other",
+                "exit_uuid": "3e161034-8a8e-478c-9e4f-24d91151fb83"
+              }
+            ],
+            "operand": "@input.text",
+            "wait": {
+              "type": "msg"
+            },
+            "result_name": "IDS_AFI_SPECIMEN_DATE_TRANSPORT"
+          },
+          "exits": [
+            {
+              "uuid": "ccafbd54-dd5b-4143-bef7-f11556103540",
+              "destination_uuid": "d1dcdeed-9a76-4f10-8039-4f87279ce984"
+            },
+            {
+              "uuid": "3e161034-8a8e-478c-9e4f-24d91151fb83",
+              "destination_uuid": null
+            }
+          ]
+        },
+        {
+          "uuid": "d1dcdeed-9a76-4f10-8039-4f87279ce984",
+          "actions": [
+            {
+              "attachments": [],
+              "text": "Question 8: Time of specimen transport? (Time format: \"HH:MM\")",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "d1c80b1c-150d-484f-a7c8-5640a608643b"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "0e987e85-432c-42bf-996c-8a9f128a2aa6",
+              "destination_uuid": "fcfbac87-9e23-4b84-9ea8-4fa62255c270"
+            }
+          ]
+        },
+        {
+          "uuid": "fcfbac87-9e23-4b84-9ea8-4fa62255c270",
+          "actions": [],
+          "router": {
+            "type": "switch",
+            "default_category_uuid": "d5264c24-8019-4382-b42e-636045be4daa",
+            "cases": [
+              {
+                "arguments": [],
+                "type": "has_time",
+                "uuid": "01a24426-9e8f-4a6d-a90d-01f7f0128c7f",
+                "category_uuid": "e5d69f36-1979-4eb4-99b9-1723079b1e89"
+              }
+            ],
+            "categories": [
+              {
+                "uuid": "e5d69f36-1979-4eb4-99b9-1723079b1e89",
+                "name": "Has Time",
+                "exit_uuid": "c810f4ec-8a7f-45fd-b898-9b49c22a431c"
+              },
+              {
+                "uuid": "d5264c24-8019-4382-b42e-636045be4daa",
+                "name": "Other",
+                "exit_uuid": "6d70ae1d-0c15-4a73-9b6e-26c874fb654f"
+              }
+            ],
+            "operand": "@input.text",
+            "wait": {
+              "type": "msg"
+            },
+            "result_name": "IDS_AFI_SPECIMEN_TIME_TRANSPORT"
+          },
+          "exits": [
+            {
+              "uuid": "c810f4ec-8a7f-45fd-b898-9b49c22a431c",
+              "destination_uuid": "9b28c383-74d1-4c93-8cdf-669f421abe92"
+            },
+            {
+              "uuid": "6d70ae1d-0c15-4a73-9b6e-26c874fb654f",
+              "destination_uuid": null
+            }
+          ]
+        },
+        {
+          "uuid": "9b28c383-74d1-4c93-8cdf-669f421abe92",
+          "actions": [
+            {
+              "type": "set_run_result",
+              "name": "eventId",
+              "value": "@trigger.params.eventId",
+              "category": "",
+              "uuid": "da925f33-09e7-4526-91f2-88877e1ebe8f"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "8185543c-b372-44e4-a86d-d5f5f6bfd403",
+              "destination_uuid": null
+            }
+          ]
+        }
+      ],
+      "_ui": {
+        "nodes": {
+          "d0a4ba97-c496-43a3-9f5f-4c58b5a17ffd": {
+            "position": {
+              "left": 140,
+              "top": 700
+            },
+            "type": "execute_actions"
+          },
+          "757bc28d-8097-4f6a-b752-3faed22ed0c9": {
+            "position": {
+              "left": 140,
+              "top": 900
+            },
+            "type": "execute_actions"
+          },
+          "2e992a35-da2c-456b-a9d2-43e02870fd41": {
+            "type": "wait_for_response",
+            "position": {
+              "left": 80,
+              "top": 1040
+            },
+            "config": {
+              "cases": {}
+            }
+          },
+          "89a30ba1-2725-452b-99a5-6e1235557fbf": {
+            "position": {
+              "left": 80,
+              "top": 1240
+            },
+            "type": "execute_actions"
+          },
+          "4566c261-fee9-46c2-8ab3-621743c55523": {
+            "type": "wait_for_response",
+            "position": {
+              "left": 60,
+              "top": 1380
+            },
+            "config": {
+              "cases": {}
+            }
+          },
+          "7dbf8f4a-4fd0-490b-ab84-28fa00db8a9c": {
+            "position": {
+              "left": 40,
+              "top": 1540
+            },
+            "type": "execute_actions"
+          },
+          "76389fd4-18e8-463a-a3d5-37dde54f10e1": {
+            "type": "wait_for_response",
+            "position": {
+              "left": 20,
+              "top": 1720
+            },
+            "config": {
+              "cases": {}
+            }
+          },
+          "36430f46-3b15-4329-8787-ad8afbbc5da0": {
+            "position": {
+              "left": 100,
+              "top": 1900
+            },
+            "type": "execute_actions"
+          },
+          "06305f17-d8a5-4dec-bef6-00fd93329425": {
+            "type": "wait_for_response",
+            "position": {
+              "left": 60,
+              "top": 2060
+            },
+            "config": {
+              "cases": {}
+            }
+          },
+          "8b4a28c0-21c4-4d90-8f73-43d349183b28": {
+            "position": {
+              "left": 40,
+              "top": 2280
+            },
+            "type": "execute_actions"
+          },
+          "f8bdfdbc-295a-4403-8a24-eb451590d863": {
+            "type": "wait_for_response",
+            "position": {
+              "left": 80,
+              "top": 2440
+            },
+            "config": {
+              "cases": {}
+            }
+          },
+          "95c113f6-660e-4021-9cb0-eb3fd9fc9732": {
+            "position": {
+              "left": 40,
+              "top": 2620
+            },
+            "type": "execute_actions"
+          },
+          "4839a055-e643-49e3-a0ef-5e0e4e360a5a": {
+            "position": {
+              "left": 280,
+              "top": 2620
+            },
+            "type": "execute_actions"
+          },
+          "e0c943bd-b890-48c7-a016-8f1d595e9bcd": {
+            "position": {
+              "left": 140,
+              "top": 2780
+            },
+            "type": "execute_actions"
+          },
+          "e429ccbd-8385-4d00-b688-377f0b3dbad5": {
+            "type": "wait_for_response",
+            "position": {
+              "left": 140,
+              "top": 2940
+            },
+            "config": {
+              "cases": {}
+            }
+          },
+          "3fd8e632-7bc8-4738-85e2-ae525508f38a": {
+            "position": {
+              "left": 40,
+              "top": 3120
+            },
+            "type": "execute_actions"
+          },
+          "29929141-5621-4c97-b368-f7057d5f6f30": {
+            "position": {
+              "left": 280,
+              "top": 3120
+            },
+            "type": "execute_actions"
+          },
+          "421560ab-dd20-49db-97cc-091f267a5077": {
+            "position": {
+              "left": 120,
+              "top": 3300
+            },
+            "type": "execute_actions"
+          },
+          "1bda5207-fb29-4043-82ce-81bdf94414f6": {
+            "type": "wait_for_response",
+            "position": {
+              "left": 120,
+              "top": 3460
+            },
+            "config": {
+              "cases": {}
+            }
+          },
+          "d1dcdeed-9a76-4f10-8039-4f87279ce984": {
+            "position": {
+              "left": 160,
+              "top": 3640
+            },
+            "type": "execute_actions"
+          },
+          "fcfbac87-9e23-4b84-9ea8-4fa62255c270": {
+            "type": "wait_for_response",
+            "position": {
+              "left": 160,
+              "top": 3800
+            },
+            "config": {
+              "cases": {}
+            }
+          },
+          "9b28c383-74d1-4c93-8cdf-669f421abe92": {
+            "position": {
+              "left": 140,
+              "top": 3960
+            },
+            "type": "execute_actions"
+          }
+        },
+        "stickies": {}
+      },
+      "revision": 78,
+      "expire_after_minutes": 10080,
+      "localization": {}
+    }
+  ],
+  "campaigns": [],
+  "triggers": [],
+  "fields": [],
+  "groups": []
+}

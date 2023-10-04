@@ -1,0 +1,8 @@
+{
+  flow: body.flowId,
+  urns: (if std.objectHas(body, "phoneNumber") && !ds.isBlank(body.phoneNumber) then ['whatsapp:%s' % body.phoneNumber] else []),
+  extra: {
+    "eventId": body.event,
+    "givenName": body.givenName
+  }
+}
